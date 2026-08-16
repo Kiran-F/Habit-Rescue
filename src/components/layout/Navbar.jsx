@@ -119,10 +119,6 @@ export default function Navbar() {
                 </button>
               )}
 
-              <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-[#202B25] border border-slate-200 dark:border-[#659F84]/40 text-xs font-semibold text-[#40755C] dark:text-[#84B59F]">
-                Resilience: {currentUser.resilienceScore || 100}%
-              </div>
-
               <div className="flex items-center gap-2 border-l border-slate-200 dark:border-[#293730] pl-3">
                 <div className="h-7 w-7 rounded-full bg-gradient-to-br from-[#659F84] to-[#E07A5F] flex items-center justify-center font-bold text-xs text-white dark:text-[#141917]">
                   {currentUser.displayName ? currentUser.displayName[0].toUpperCase() : 'A'}

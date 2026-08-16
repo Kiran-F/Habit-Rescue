@@ -228,14 +228,14 @@ export function HabitProvider({ children }) {
     }
   };
 
-  // Trigger Rescue Mode
+  // Trigger Rescue Mode with Gemini AI
   const triggerRescueMode = async (habitId, failureReason = 'Too tired', userNotes = '', variation = 0) => {
     const habit = habits.find(h => h.id === habitId);
     if (!habit) return;
 
     updateHabit(habitId, { inRescueMode: true });
 
-    const aiPlan = generateAIRecoveryPlan(habit, failureReason, '', variation);
+    const aiPlan = await generateAIRecoveryPlan(habit, failureReason, userNotes, variation);
     aiPlan.userId = currentUser?.uid || 'user-123';
     
     setRecoveryPlans(prev => [aiPlan, ...prev.filter(p => p.habitId !== habitId)]);

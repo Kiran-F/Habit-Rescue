@@ -6,8 +6,8 @@ import {
   LifeBuoy, 
   CheckCircle2, 
   Flame, 
-  Calendar as CalendarIcon,
-  PieChart as PieChartIcon,
+  Calendar as CalendarIcon, 
+  PieChart as PieChartIcon, 
   CheckCircle,
   TrendingUp, 
   HeartHandshake, 
@@ -41,7 +41,7 @@ export default function DashboardPage() {
     ? todayValidLogs.filter(l => l.status === 'completed').length 
     : 0;
 
-  // Percentage of habits completed today!
+  // Percentage of habits completed today
   const todayCompletionPercentage = activeHabits.length > 0 
     ? Math.round((completedTodayCount / activeHabits.length) * 100) 
     : 0;
@@ -154,20 +154,20 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Card 2: Habits Completed Percentage Today ONLY */}
+        {/* Card 2: Habits Completed as Completed / Total (e.g. 3/5) */}
         <div className="rounded-3xl bg-[#202B25] border border-[#293730] p-5 text-white flex flex-col justify-between shadow-lg h-36">
           <div className="flex items-center justify-between">
             <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#659F84]/20">
               <CheckCircle className="h-5 w-5 text-[#659F84]" />
             </div>
             <div className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#659F84]/20 text-[11px] font-bold text-[#84B59F]">
-              Today
+              {todayCompletionPercentage}%
             </div>
           </div>
           <div>
             <span className="text-xs font-semibold text-slate-400 block">Habits Completed</span>
             <span className="font-heading text-3xl font-extrabold tracking-tight text-white block pt-0.5">
-              {todayCompletionPercentage}%
+              {completedTodayCount}/{activeHabits.length}
             </span>
           </div>
         </div>

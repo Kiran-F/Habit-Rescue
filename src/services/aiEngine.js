@@ -1,8 +1,8 @@
 import { format, subDays, parseISO } from 'date-fns';
 
 /**
- * AI Service Engine for Habit Rescue
- * Provides supportive AI recovery plans, pattern explanations, target adjustments, and weekly summaries.
+ * AI Service Engine for Habit Rescue powered by Google Gemini API
+ * Generates tailored behavioral AI recovery plans, pattern explanations, target adjustments, and weekly summaries.
  */
 
 export const REASON_OPTIONS = [
@@ -16,14 +16,118 @@ export const REASON_OPTIONS = [
   { id: 'other', label: 'Other reason', icon: '💬', description: 'Custom circumstance' }
 ];
 
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+
 /**
- * Generate a 4-Day Progressive AI Micro-Goal Recovery Plan
+ * Generate a 4-Day Progressive AI Micro-Goal Recovery Plan using Google Gemini API
  */
-export function generateAIRecoveryPlan(habit, failureReason, userNotes = '', variation = 0) {
+export async function generateAIRecoveryPlan(habit, failureReason, userNotes = '', variation = 0) {
   const target = habit.targetAmount || 30;
   const unit = habit.targetUnit || 'minutes';
   const reasonText = failureReason || 'Too tired';
 
+  const todayStr = format(new Date(), 'yyyy-MM-dd');
+  const day1 = format(subDays(new Date(), -1), 'yyyy-MM-dd');
+  const day2 = format(subDays(new Date(), -2), 'yyyy-MM-dd');
+  const day3 = format(subDays(new Date(), -3), 'yyyy-MM-dd');
+
+  // Call Google Gemini API (gemini-3.7-flash)
+  if (GEMINI_API_KEY && GEMINI_API_KEY.length > 10) {
+    try {
+      const prompt = `You are an empathetic, behavioral habit psychologist AI for "Habit Rescue".
+The user missed their daily habit: "${habit.name}" (Target: ${target} ${unit}).
+Category: ${habit.category || 'General'}.
+Reason for missing: "${reasonText}".
+Optional user notes: "${userNotes || 'None'}".
+Variation option index: ${variation}.
+
+Generate a supportive 4-day progressive micro-recovery ramp-up plan to help the user gently rebuild momentum without guilt.
+Output strictly valid JSON with this exact schema (no markdown, no backticks):
+{
+  "explanation": "1-2 supportive sentences tailored to overcoming ${reasonText} for ${habit.name}",
+  "steps": [
+    {
+      "stepNumber": 1,
+      "title": "Low-friction Step 1 Title",
+      "duration": number (10-25% of ${target}),
+      "unit": "${unit}",
+      "description": "Empathetic action instruction for Day 1"
+    },
+    {
+      "stepNumber": 2,
+      "title": "Re-engagement Step 2 Title",
+      "duration": number (35-50% of ${target}),
+      "unit": "${unit}",
+      "description": "Empathetic action instruction for Day 2"
+    },
+    {
+      "stepNumber": 3,
+      "title": "Momentum Step 3 Title",
+      "duration": number (65-75% of ${target}),
+      "unit": "${unit}",
+      "description": "Empathetic action instruction for Day 3"
+    },
+    {
+      "stepNumber": 4,
+      "title": "Full Recovery Step 4 Title",
+      "duration": ${target},
+      "unit": "${unit}",
+      "description": "Return to regular ${target} ${unit} target"
+    }
+  ]
+}`;
+
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent?key=${GEMINI_API_KEY}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: {
+              temperature: 0.7,
+              responseMimeType: 'application/json'
+            }
+          })
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (rawText) {
+          const parsed = JSON.parse(rawText);
+          if (parsed.steps && parsed.steps.length === 4) {
+            const stepDates = [todayStr, day1, day2, day3];
+            return {
+              id: `plan-${Date.now()}`,
+              habitId: habit.id,
+              createdAt: new Date().toISOString(),
+              createdDate: todayStr,
+              triggerReason: reasonText,
+              status: 'pending_approval',
+              variation,
+              currentStepIndex: 0,
+              explanation: parsed.explanation || `Gradual 4-day ramp-up to recover your ${habit.name} routine without stress.`,
+              steps: parsed.steps.map((s, idx) => ({
+                stepNumber: s.stepNumber || idx + 1,
+                title: s.title || `Day ${idx + 1}`,
+                duration: Number(s.duration) || Math.max(1, Math.round(target * ((idx + 1) * 0.25))),
+                unit: s.unit || unit,
+                description: s.description || `Step ${idx + 1} recovery task.`,
+                status: 'pending',
+                date: stepDates[idx]
+              }))
+            };
+          }
+        }
+      }
+    } catch (apiError) {
+      console.warn('Gemini API call fallback to heuristic engine:', apiError);
+    }
+  }
+
+  // Heuristic Fallback Engine
   let step1Duration, step2Duration, step3Duration, step4Duration;
 
   if (variation === 1) {
@@ -55,11 +159,6 @@ export function generateAIRecoveryPlan(habit, failureReason, userNotes = '', var
     }
   }
 
-  const todayStr = format(new Date(), 'yyyy-MM-dd');
-  const day1 = format(subDays(new Date(), -1), 'yyyy-MM-dd');
-  const day2 = format(subDays(new Date(), -2), 'yyyy-MM-dd');
-  const day3 = format(subDays(new Date(), -3), 'yyyy-MM-dd');
-
   let explanation = '';
   if (variation === 1) {
     explanation = `[Ultra-Gentle Option] Scale down to an absolute zero-friction ${step1Duration}-${unit} touchpoint to build momentum without any stress.`;
@@ -80,7 +179,7 @@ export function generateAIRecoveryPlan(habit, failureReason, userNotes = '', var
     habitId: habit.id,
     createdAt: new Date().toISOString(),
     createdDate: todayStr,
-    triggerReason: reasonText, // Clean trigger reason
+    triggerReason: reasonText,
     status: 'pending_approval',
     variation,
     currentStepIndex: 0,

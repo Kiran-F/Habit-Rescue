@@ -1,16 +1,115 @@
-# React + Vite
+# 🌱 Habit Rescue — Don't Punish the Miss. Rescue the Habit.
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+> An empathetic, AI-powered habit companion that turns missed routines into 4-day progressive micro-recovery plans — with zero streak guilt.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🎯 Track Submissions
 
-## React Compiler
+* **Main Track**: 🌿 **Wellness Track**  
+  *Habit Rescue directly supports mental and behavioral wellness by eliminating the anxiety, guilt, and burnout associated with rigid, punitive habit trackers. It treats habit building as an act of self-care and resilience rather than a test of perfection.*
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* **Bonus Track**: 🤖 **Best Use of AI**  
+  *Rather than just being a generic chatbot, the AI in Habit Rescue serves as an embedded behavioral psychologist. It dynamically analyzes the context of your missed habits (fatigue, unexpected schedule changes, low motivation) and generates adaptive, stepped micro-recovery plans with tailored pacing and actionable friction reduction.*
 
-## Expanding the Oxlint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## 💡 What Does It Do?
+
+Most habit trackers share the same unforgiving mechanic: you build a 20-day streak, miss one day because you were sick or worked late, and your counter resets to zero. That single moment of failure often leads to frustration, streak guilt, and abandoning the habit entirely.
+
+**Habit Rescue replaces punishment with recovery:**
+
+1. **Daily Check-In & Live Overview**: Track your habits daily on a clean dashboard showing live metrics — current streak, today's completion ratio, and overall consistency rate.
+2. **Empathetic Miss Logging**: When you miss a habit, instead of deducting points or breaking your streak, Habit Rescue asks one thoughtful question: *"What got in the way today?"*
+3. **4-Day Progressive AI Micro-Recovery Plans**: Powered by **Google Gemini**, the app generates a personalized 4-day ramp-up plan. Day 1 starts with an ultra-low-friction micro-step (e.g., just 5 minutes or a light walk) to protect the neurological habit loop, gently ramping back to 100% by Day 4.
+4. **Rescue Center with Daily Pacing**: Recovery steps unlock one day at a time to prevent bingeing and burnout. Users can accept, regenerate alternative variations, or dismiss plans as they please.
+5. **Seamless Auto-Resolution**: The moment you mark your habit as completed normally, the recovery plan automatically resolves and returns to regular flow.
+6. **Obstacle Pattern Detection & Root-Cause Analytics**: Uncovers recurring friction points (like missing workouts specifically on Thursdays due to fatigue) and suggests proactive friction adjustments before burnout occurs.
+7. **Non-Punitive Calendar**: A monthly visual journal celebrating both successful check-ins and resilient AI rescue events.
+
+---
+
+## ✨ What Inspired It?
+
+We’ve all been there: you’re excited about a new routine — whether it's meditating, reading, drinking water, or exercising. You build momentum for two weeks, but then life happens. You catch a cold, a deadline runs late, or you're simply exhausted. 
+
+Traditional habit apps punish you for being human. Seeing a streak reset to zero creates an *"all-or-nothing"* mindset: *"I already ruined my streak, so why bother trying today?"*
+
+We were inspired by modern cognitive behavioral psychology and James Clear's *Atomic Habits*: **"Missing once is an accident. Missing twice is the start of a new habit."**
+
+We wanted to create a tool built on the philosophy that **a missed habit is not a failure — it is valuable information.** By understanding *why* you missed, an app should adapt to support you, removing friction so you can get back on track effortlessly.
+
+---
+
+## 🛠️ Technologies Used
+
+### Frontend & UI
+* **React 18**: Component-driven architecture with custom hooks and context providers.
+* **Vite**: Ultra-fast build tool and local development server.
+* **Tailwind CSS & Custom Design System**: Warm Zen Botanical aesthetic with custom color palettes (Sage Emerald, Terracotta Orange, Sand Gold, and Dark Obsidian).
+* **Lucide React**: Clean, modern iconography across all screens.
+* **Recharts**: Interactive and accessible data visualization for analytics and pattern recognition.
+* **Date-fns**: Robust date manipulation, calendar generation, and streak tracking.
+
+### Backend & Cloud Services
+* **Firebase Authentication**: Secure user login, registration, password resets, and instant one-click demo sessions.
+* **Cloud Firestore**: Real-time cloud database syncing habits, daily logs, and active recovery plans across devices.
+
+### 🧠 Artificial Intelligence Model
+* **Model Used**: **Google Gemini 3.7 Flash** (`gemini-3.7-flash` via Google AI Studio API).
+* **Tier**: **Free Tier** (`v1beta` endpoint).
+* **AI Implementation Details**:
+  * We prompt Gemini with structured JSON schemas to act as a supportive behavioral habit coach.
+  * Inputs include the habit name, category, standard target amount, measurement unit, failure obstacle (*e.g., "Too tired", "Schedule changed"*), and optional user notes.
+  * Gemini dynamically calculates progressive percentages, crafts empathetic explanations, and writes custom daily micro-goal instructions.
+  * Includes a built-in deterministic heuristic fallback engine to guarantee 100% offline uptime and zero-latency performance if network constraints arise.
+
+### 🌓 Theme System
+* Dual **Light & Dark Mode** with high-contrast typography, custom backdrop grid meshes, and persistent `localStorage` theme state.
+
+---
+
+## 🚀 Getting Started Locally
+
+### Prerequisites
+* **Node.js** (v18 or higher)
+* **npm** or **yarn**
+
+### Installation
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/Kiran-F/Habit-Rescue.git
+   cd HabitRescue
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Configure Environment Variables**:
+   Create a `.env` file in the root directory (or copy from `.env.example`):
+   ```env
+   VITE_FIREBASE_API_KEY=your_firebase_api_key
+   VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+   VITE_FIREBASE_PROJECT_ID=your_project_id
+   VITE_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+   VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+   VITE_FIREBASE_APP_ID=your_app_id
+   VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
+   VITE_GEMINI_API_KEY=your_gemini_api_key
+   ```
+
+4. **Start the local development server**:
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## 👥 Built with Care
+
+Built for anyone striving to build sustainable, lifelong habits without the pressure of perfection. 🌱
