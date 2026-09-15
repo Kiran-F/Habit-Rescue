@@ -4,7 +4,7 @@ import { getFirestore } from "firebase/firestore";
 import { getAnalytics, isSupported } from "firebase/analytics";
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "habit-rescue.firebaseapp.com",
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "habit-rescue",
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "habit-rescue.firebasestorage.app",

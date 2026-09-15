@@ -100,38 +100,55 @@ h6,
   font-family: 'Outfit', sans-serif;
 }
 
-/* Light Mode Overrides for Hardcoded Hex Colors */
+/* Light Mode Overrides for Hardcoded Hex Containers (excluding explicit dark-mode cards) */
 html.light .bg-\[\#141917\] {
   background-color: #F4F7F5 !important;
 }
 
-html.light .bg-\[\#202B25\] {
+html.light .bg-\[\#202B25\]:not([data-theme-ignore]):not(.dark-card) {
   background-color: #FFFFFF !important;
   border-color: #D8E2DC !important;
   color: #16201B !important;
 }
 
-html.light .bg-\[\#1B2620\] {
+html.light .bg-\[\#1B2620\]:not([data-theme-ignore]):not(.dark-card) {
   background-color: #E2ECE6 !important;
   border-color: #C8D8CE !important;
 }
 
-html.light .bg-\[\#18231E\] {
+html.light .bg-\[\#18231E\]:not([data-theme-ignore]):not(.dark-card) {
   background-color: #FFFFFF !important;
   border-color: #D8E2DC !important;
 }
 
-html.light .text-white {
-  color: #16201B !important;
-}
-
-html.light .text-slate-300,
-html.light .text-slate-400 {
-  color: #4A5568 !important;
-}
-
-html.light .border-\[\#293730\] {
+html.light .border-\[\#293730\]:not([data-theme-ignore]):not(.dark-card) {
   border-color: #D8E2DC !important;
+}
+
+/* Explicit Dark Card styles to preserve contrast in both themes */
+.clinical-card {
+  background-color: #375c4b !important;
+  border-color: #4a7762 !important;
+}
+
+.clinical-card,
+.clinical-card * {
+  box-sizing: border-box;
+}
+
+.clinical-card h2,
+.clinical-card .stat-number {
+  color: #FFFFFF !important;
+}
+
+.clinical-card p.research-body,
+.clinical-card .stat-desc {
+  color: #E2ECE7 !important;
+}
+
+.clinical-card .citation-text,
+.clinical-card .section-tag {
+  color: #A7D7C5 !important;
 }
 
 /* Glass Panels */
