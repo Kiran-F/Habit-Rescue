@@ -104,10 +104,15 @@ export default function CompactHabitRow({ habit }) {
 
               <button
                 onClick={() => setMissModalOpen(true)}
-                className="p-1.5 rounded-xl border border-slate-300 dark:border-[#293730] bg-slate-100 dark:bg-[#141917] text-slate-600 dark:text-slate-400 hover:text-[#E07A5F] dark:hover:text-[#E9C46A] hover:bg-slate-200 dark:hover:bg-[#E9C46A]/20"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all ${
+                  isMissed
+                    ? 'bg-[#E9C46A]/20 border-[#E9C46A] text-[#B58A1C] dark:text-[#E9C46A] font-bold'
+                    : 'border-slate-300 dark:border-[#293730] bg-slate-100 dark:bg-[#141917] text-slate-700 dark:text-slate-300 hover:text-[#B58A1C] dark:hover:text-[#E9C46A] hover:bg-slate-200 dark:hover:bg-[#E9C46A]/20'
+                }`}
                 title="Mark Missed (AI Rescue)"
               >
-                <LifeBuoy className="h-4 w-4 text-[#E07A5F] dark:text-[#E9C46A]" />
+                <LifeBuoy className="h-3.5 w-3.5 text-[#E07A5F] dark:text-[#E9C46A]" />
+                Missed
               </button>
             </div>
           )}
