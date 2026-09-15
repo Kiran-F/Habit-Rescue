@@ -247,11 +247,11 @@ export function HabitProvider({ children }) {
   };
 
   // Regenerate Another AI Plan Option
-  const regenerateRecoveryPlan = (habitId) => {
+  const regenerateRecoveryPlan = async (habitId) => {
     const existing = recoveryPlans.find(p => p.habitId === habitId);
     const nextVariation = ((existing?.variation || 0) + 1) % 3;
     const reason = existing?.triggerReason || 'Too tired';
-    return triggerRescueMode(habitId, reason, '', nextVariation);
+    return await triggerRescueMode(habitId, reason, '', nextVariation);
   };
 
   // Accept Proposed Recovery Plan

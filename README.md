@@ -22,7 +22,7 @@ Most habit trackers share the same unforgiving mechanic: you build a 20-day stre
 
 1. **Daily Check-In & Live Overview**: Track your habits daily on a clean dashboard showing live metrics — current streak, today's completion ratio, and overall consistency rate.
 2. **Empathetic Miss Logging**: When you miss a habit, instead of deducting points or breaking your streak, Habit Rescue asks one thoughtful question: *"What got in the way today?"*
-3. **4-Day Progressive AI Micro-Recovery Plans**: Powered by **Google Gemini**, the app generates a personalized 4-day ramp-up plan. Day 1 starts with an ultra-low-friction micro-step (e.g., just 5 minutes or a light walk) to protect the neurological habit loop, gently ramping back to 100% by Day 4.
+3. **4-Day Progressive AI Micro-Recovery Plans**: Powered by **Groq API (Llama 3.3 70B Versatile)** and **Google Gemini**, the app generates a personalized 4-day ramp-up plan in milliseconds. Day 1 starts with an ultra-low-friction micro-step (e.g., just 5 minutes or a light walk) to protect the neurological habit loop, gently ramping back to 100% by Day 4.
 4. **Rescue Center with Daily Pacing**: Recovery steps unlock one day at a time to prevent bingeing and burnout. Users can accept, regenerate alternative variations, or dismiss plans as they please.
 5. **Seamless Auto-Resolution**: The moment you mark your habit as completed normally, the recovery plan automatically resolves and returns to regular flow.
 6. **Obstacle Pattern Detection & Root-Cause Analytics**: Uncovers recurring friction points (like missing workouts specifically on Thursdays due to fatigue) and suggests proactive friction adjustments before burnout occurs.
@@ -56,14 +56,15 @@ We wanted to create a tool built on the philosophy that **a missed habit is not 
 * **Firebase Authentication**: Secure user login, registration, password resets, and instant one-click demo sessions.
 * **Cloud Firestore**: Real-time cloud database syncing habits, daily logs, and active recovery plans across devices.
 
-### 🧠 Artificial Intelligence Model
-* **Model Used**: **Google Gemini 3.7 Flash** (`gemini-3.7-flash` via Google AI Studio API).
-* **Tier**: **Free Tier** (`v1beta` endpoint).
+### 🧠 Artificial Intelligence Engine
+* **Primary AI Engine**: **Groq API — Llama 3.3 70B Versatile** (`llama-3.3-70b-versatile` via Groq LPU™ Inference Engine).
+* **Fallback AI Models**: **Llama 3.1 8B Instant** (`llama-3.1-8b-instant`), **Google Gemini** (`gemini-2.5-flash`, `gemini-2.0-flash`, `gemini-1.5-flash`), and offline deterministic Heuristic Engine.
+* **Speed & Reliability**: Sub-second (~300ms) ultra-fast inference with zero user waiting time, powered by Groq's specialized LPUs.
 * **AI Implementation Details**:
-  * We prompt Gemini with structured JSON schemas to act as a supportive behavioral habit coach.
+  * Prompts the AI with structured JSON schemas acting as a supportive behavioral habit coach.
   * Inputs include the habit name, category, standard target amount, measurement unit, failure obstacle (*e.g., "Too tired", "Schedule changed"*), and optional user notes.
-  * Gemini dynamically calculates progressive percentages, crafts empathetic explanations, and writes custom daily micro-goal instructions.
-  * Includes a built-in deterministic heuristic fallback engine to guarantee 100% offline uptime and zero-latency performance if network constraints arise.
+  * The model dynamically calculates progressive percentages, crafts empathetic explanations, and writes custom daily micro-goal instructions.
+  * Includes multi-tiered fallback architecture (Groq ➡️ Gemini ➡️ Heuristic Engine) ensuring 100% uptime under any network condition.
 
 ### 🌓 Theme System
 * Dual **Light & Dark Mode** with high-contrast typography, custom backdrop grid meshes, and persistent `localStorage` theme state.
@@ -99,6 +100,7 @@ We wanted to create a tool built on the philosophy that **a missed habit is not 
    VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
    VITE_FIREBASE_APP_ID=your_app_id
    VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
+   VITE_GROQ_API_KEY=your_groq_api_key
    VITE_GEMINI_API_KEY=your_gemini_api_key
    ```
 

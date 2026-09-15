@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { 
-  X, 
-  Sparkles, 
-  HeartHandshake, 
+import {
+  X,
+  Sparkles,
+  HeartHandshake,
   HelpCircle,
   ArrowRight
 } from 'lucide-react';
@@ -33,7 +33,7 @@ export default function MissedHabitModal({ habit, isOpen, onClose }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm animate-in fade-in duration-200">
       <div className="w-full max-w-lg rounded-3xl border border-slate-200 dark:border-[#293730] bg-white dark:bg-[#202B25] p-6 shadow-2xl space-y-5">
-        
+
         {/* Header */}
         <div className="flex items-start justify-between border-b border-slate-200 dark:border-[#293730] pb-4">
           <div className="flex items-center gap-3">
@@ -45,7 +45,7 @@ export default function MissedHabitModal({ habit, isOpen, onClose }) {
               <p className="text-xs text-slate-500 dark:text-slate-400">Missed: <span className="text-slate-900 dark:text-white font-semibold">{habit.name}</span></p>
             </div>
           </div>
-          <button 
+          <button
             onClick={onClose}
             className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-[#141917] hover:text-slate-900 dark:hover:text-white"
           >
@@ -66,11 +66,10 @@ export default function MissedHabitModal({ habit, isOpen, onClose }) {
                 key={opt.id}
                 type="button"
                 onClick={() => setSelectedReason(opt.id)}
-                className={`flex items-start gap-2.5 p-3 rounded-2xl border text-left transition-all ${
-                  selectedReason === opt.id
+                className={`flex items-start gap-2.5 p-3 rounded-2xl border text-left transition-all ${selectedReason === opt.id
                     ? 'bg-[#659F84]/20 border-[#659F84] text-slate-900 dark:text-white shadow-md ring-1 ring-[#659F84]'
                     : 'bg-slate-50 dark:bg-[#141917] border-slate-200 dark:border-[#293730] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#202B25]'
-                }`}
+                  }`}
               >
                 <span className="text-lg">{opt.icon}</span>
                 <div>

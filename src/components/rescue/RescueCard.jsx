@@ -76,6 +76,20 @@ export default function RescueCard({ habit, recoveryPlan }) {
     );
   }
 
+  const [isRegenerating, setIsRegenerating] = useState(false);
+
+  const handleRegenerate = async () => {
+    setIsRegenerating(true);
+    const targetHabitId = recoveryPlan.habitId || habit?.id;
+    try {
+      await regenerateRecoveryPlan(targetHabitId);
+    } catch (err) {
+      console.warn('Failed to regenerate recovery plan:', err);
+    } finally {
+      setIsRegenerating(false);
+    }
+  };
+
   return (
     <div className={`rounded-3xl border p-6 shadow-xl space-y-5 transition-colors duration-300 ${
       isPendingApproval
@@ -86,9 +100,9 @@ export default function RescueCard({ habit, recoveryPlan }) {
       {/* Header Info */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-[#293730] pb-4">
         <div className="space-y-1">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             {isPendingApproval ? (
-              <span className="rounded-full bg-[#E9C46A]/20 text-[#E9C46A] border border-[#E9C46A]/40 px-3 py-0.5 text-xs font-bold flex items-center gap-1">
+              <span className="rounded-full bg-[#E9C46A]/20 text-[#B58A1C] dark:text-[#E9C46A] border border-[#E9C46A]/40 px-3 py-0.5 text-xs font-bold flex items-center gap-1">
                 <Sparkles className="h-3.5 w-3.5" /> AI Proposal Reviewing
               </span>
             ) : (
@@ -96,20 +110,31 @@ export default function RescueCard({ habit, recoveryPlan }) {
                 <LifeBuoy className="h-3.5 w-3.5" /> Active Recovery Plan
               </span>
             )}
+            {recoveryPlan.isAIGenerated && (
+              <span className="rounded-full bg-emerald-500/15 text-[#2D6A4F] dark:text-[#84B59F] border border-emerald-500/30 px-2.5 py-0.5 text-[10px] font-bold flex items-center gap-1">
+                <Sparkles className="h-3 w-3 text-[#659F84]" /> {recoveryPlan.aiModel ? (recoveryPlan.aiModel.includes('Groq') ? 'Powered by Groq LPU' : recoveryPlan.aiModel.includes('Gemini') ? 'Powered by Gemini AI' : `Powered by ${recoveryPlan.aiModel}`) : 'Powered by Groq AI'}
+              </span>
+            )}
             <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Triggered by: {recoveryPlan.triggerReason || 'Missed habit'}</span>
           </div>
           <h2 className="font-heading text-xl font-bold text-slate-900 dark:text-white">{habit.name}</h2>
+          {recoveryPlan.explanation && (
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed pt-1">
+              {recoveryPlan.explanation}
+            </p>
+          )}
         </div>
 
         {/* Top Control Buttons */}
         <div className="flex items-center gap-2">
           {!isPendingApproval && (
             <button
-              onClick={() => regenerateRecoveryPlan(habit.id)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-[#293730] bg-slate-50 dark:bg-[#141917] text-xs text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:border-[#659F84]/40 transition-colors font-medium"
+              onClick={handleRegenerate}
+              disabled={isRegenerating}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-[#293730] bg-slate-50 dark:bg-[#141917] text-xs text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:border-[#659F84]/40 transition-colors font-medium disabled:opacity-50"
             >
-              <RotateCcw className="h-3.5 w-3.5 text-[#E07A5F]" />
-              Generate Another Plan
+              <RotateCcw className={`h-3.5 w-3.5 text-[#E07A5F] ${isRegenerating ? 'animate-spin' : ''}`} />
+              {isRegenerating ? 'Generating Plan...' : 'Generate Another Plan'}
             </button>
           )}
           <button
@@ -139,11 +164,12 @@ export default function RescueCard({ habit, recoveryPlan }) {
             </button>
 
             <button
-              onClick={() => regenerateRecoveryPlan(habit.id)}
-              className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl border border-[#E9C46A]/40 bg-[#E9C46A]/15 text-xs font-bold text-[#E9C46A] hover:bg-[#E9C46A]/25 transition-colors"
+              onClick={handleRegenerate}
+              disabled={isRegenerating}
+              className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl border border-[#E9C46A]/40 bg-[#E9C46A]/15 text-xs font-bold text-[#B58A1C] dark:text-[#E9C46A] hover:bg-[#E9C46A]/25 transition-colors disabled:opacity-50"
             >
-              <RefreshCw className="h-3.5 w-3.5" />
-              Generate Another
+              <RefreshCw className={`h-3.5 w-3.5 ${isRegenerating ? 'animate-spin' : ''}`} />
+              {isRegenerating ? 'Generating...' : 'Generate Another'}
             </button>
 
             <button
