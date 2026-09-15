@@ -48,8 +48,8 @@ export default function HabitCard({ habit, onEdit }) {
     <>
       <div className={`relative flex flex-col justify-between rounded-3xl border p-5 transition-all ${
         habit.inRescueMode || currentPlan
-          ? 'bg-[#202B25] border-[#E07A5F]/60 shadow-lg shadow-black/40 glow-amber'
-          : 'bg-[#202B25] border-[#293730] hover:border-[#659F84]/50 glass-card-hover'
+          ? 'bg-white dark:bg-[#202B25] border-[#E07A5F]/60 shadow-lg glow-amber'
+          : 'bg-white dark:bg-[#202B25] border-slate-200 dark:border-[#293730] hover:border-[#659F84]/50 shadow-md glass-card-hover'
       }`}>
         
         {/* Card Top */}
@@ -66,8 +66,8 @@ export default function HabitCard({ habit, onEdit }) {
                   </span>
                 )}
               </div>
-              <h3 className="font-heading text-lg font-bold text-white tracking-tight">
-                <Link to={`/habits/${habit.id}`} className="hover:text-[#84B59F] transition-colors">
+              <h3 className="font-heading text-lg font-bold text-slate-900 dark:text-white tracking-tight">
+                <Link to={`/habits/${habit.id}`} className="hover:text-[#40755C] dark:hover:text-[#84B59F] transition-colors">
                   {habit.name}
                 </Link>
               </h3>
@@ -77,22 +77,22 @@ export default function HabitCard({ habit, onEdit }) {
             <div className="relative">
               <button
                 onClick={() => setShowOptions(!showOptions)}
-                className="rounded-lg p-1 text-slate-400 hover:bg-[#141917] hover:text-white"
+                className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-[#141917] hover:text-slate-900 dark:hover:text-white"
               >
                 <MoreVertical className="h-4 w-4" />
               </button>
 
               {showOptions && (
-                <div className="absolute right-0 top-7 z-10 w-36 rounded-2xl border border-[#293730] bg-[#141917] p-1.5 shadow-xl space-y-1">
+                <div className="absolute right-0 top-7 z-10 w-36 rounded-2xl border border-slate-200 dark:border-[#293730] bg-white dark:bg-[#141917] p-1.5 shadow-xl space-y-1">
                   <button
                     onClick={() => { setShowOptions(false); onEdit?.(habit); }}
-                    className="flex w-full items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs text-slate-300 hover:bg-[#202B25] hover:text-white"
+                    className="flex w-full items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#202B25] hover:text-slate-900 dark:hover:text-white"
                   >
                     <Edit2 className="h-3.5 w-3.5" /> Edit Habit
                   </button>
                   <button
                     onClick={() => { setShowOptions(false); deleteHabit(habit.id); }}
-                    className="flex w-full items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs text-red-400 hover:bg-red-950/40"
+                    className="flex w-full items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40"
                   >
                     <Trash2 className="h-3.5 w-3.5" /> Delete Habit
                   </button>
@@ -101,12 +101,12 @@ export default function HabitCard({ habit, onEdit }) {
             </div>
           </div>
 
-          <p className="text-xs text-slate-400 line-clamp-2">
+          <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2">
             {habit.description || `Target: ${habit.targetAmount} ${habit.targetUnit} (${habit.frequency})`}
           </p>
 
-          <div className="flex items-center gap-3 text-xs text-slate-400 pt-1 border-t border-[#293730]">
-            <span className="flex items-center gap-1 font-semibold text-[#84B59F]">
+          <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 pt-1 border-t border-slate-200 dark:border-[#293730]">
+            <span className="flex items-center gap-1 font-semibold text-[#40755C] dark:text-[#84B59F]">
               <Clock className="h-3.5 w-3.5 text-[#659F84]" />
               {habit.targetAmount} {habit.targetUnit}
             </span>
@@ -130,8 +130,8 @@ export default function HabitCard({ habit, onEdit }) {
         )}
 
         {/* Check-In Controls for Today */}
-        <div className="mt-4 pt-3 border-t border-[#293730]">
-          <span className="text-[11px] font-semibold text-slate-400 block mb-2">
+        <div className="mt-4 pt-3 border-t border-slate-200 dark:border-[#293730]">
+          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block mb-2">
             Today's Check-in ({todayStr}):
           </span>
 
@@ -141,13 +141,13 @@ export default function HabitCard({ habit, onEdit }) {
               onClick={() => logHabitStatus(habit.id, 'completed')}
               className={`flex items-center justify-center gap-1.5 rounded-xl py-2 px-2 text-xs font-bold transition-all ${
                 todayLog?.status === 'completed'
-                  ? 'bg-[#659F84] text-[#141917] font-extrabold shadow-md shadow-[#659F84]/20'
+                  ? 'bg-[#659F84] text-white dark:text-[#141917] font-extrabold shadow-md shadow-[#659F84]/20'
                   : 'bg-[#E07A5F] text-white hover:bg-[#C95A3F]'
               }`}
             >
               {todayLog?.status === 'completed' ? (
                 <>
-                  <Check className="h-3.5 w-3.5 text-[#141917] stroke-[3]" />
+                  <Check className="h-3.5 w-3.5 text-white dark:text-[#141917] stroke-[3]" />
                   Done
                 </>
               ) : (
@@ -163,11 +163,11 @@ export default function HabitCard({ habit, onEdit }) {
               onClick={() => setMissModalOpen(true)}
               className={`flex items-center justify-center gap-1.5 rounded-xl py-2 px-2 text-xs font-semibold border transition-all ${
                 todayLog?.status === 'missed'
-                  ? 'bg-[#E9C46A]/20 border-[#E9C46A] text-[#E9C46A] font-bold'
-                  : 'bg-[#141917] border-[#293730] text-slate-300 hover:bg-[#E9C46A]/20 hover:text-[#E9C46A]'
+                  ? 'bg-[#E9C46A]/20 border-[#E9C46A] text-[#B58A1C] dark:text-[#E9C46A] font-bold'
+                  : 'bg-slate-100 dark:bg-[#141917] border-slate-200 dark:border-[#293730] text-slate-700 dark:text-slate-300 hover:bg-[#E9C46A]/20 hover:text-[#B58A1C] dark:hover:text-[#E9C46A]'
               }`}
             >
-              <LifeBuoy className="h-3.5 w-3.5 text-[#E9C46A]" />
+              <LifeBuoy className="h-3.5 w-3.5 text-[#E07A5F] dark:text-[#E9C46A]" />
               Missed
             </button>
 
@@ -176,8 +176,8 @@ export default function HabitCard({ habit, onEdit }) {
               onClick={() => logHabitStatus(habit.id, 'skipped', 'Rest day')}
               className={`flex items-center justify-center gap-1.5 rounded-xl py-2 px-2 text-xs font-medium border transition-all ${
                 todayLog?.status === 'skipped'
-                  ? 'bg-[#293730] text-slate-300'
-                  : 'bg-[#141917] border-[#293730] text-slate-400 hover:bg-[#202B25]'
+                  ? 'bg-slate-200 dark:bg-[#293730] text-slate-800 dark:text-slate-300'
+                  : 'bg-slate-100 dark:bg-[#141917] border-slate-200 dark:border-[#293730] text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-[#202B25]'
               }`}
             >
               <MinusCircle className="h-3.5 w-3.5" />

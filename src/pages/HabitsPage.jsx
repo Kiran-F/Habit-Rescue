@@ -24,15 +24,15 @@ export default function HabitsPage() {
     <div className="space-y-6">
       
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#293730] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-[#293730] pb-4">
         <div>
-          <h1 className="font-heading text-2xl sm:text-3xl font-extrabold text-white">Habits Directory</h1>
-          <p className="text-xs text-slate-400">Manage your routines, daily targets, and custom recovery presets.</p>
+          <h1 className="font-heading text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">Habits Directory</h1>
+          <p className="text-xs text-slate-500 dark:text-slate-400">Manage your routines, daily targets, and custom recovery presets.</p>
         </div>
 
         <button
           onClick={() => { setEditingHabit(null); setFormModalOpen(true); }}
-          className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#659F84] hover:bg-[#52796F] font-bold text-xs text-[#141917] shadow-md transition-all hover:scale-[1.02]"
+          className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#659F84] hover:bg-[#52796F] font-bold text-xs text-white dark:text-[#141917] shadow-md transition-all hover:scale-[1.02]"
         >
           <Plus className="h-4 w-4" />
           Create Habit
@@ -44,13 +44,13 @@ export default function HabitsPage() {
         
         {/* Search Input */}
         <div className="relative flex-1">
-          <Search className="absolute left-3.5 top-3 h-4 w-4 text-slate-500" />
+          <Search className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
           <input
             type="text"
             placeholder="Search habits by name or keyword..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-xl border border-[#293730] bg-[#202B25] pl-10 pr-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:border-[#659F84] focus:outline-none"
+            className="w-full rounded-xl border border-slate-300 dark:border-[#293730] bg-white dark:bg-[#202B25] pl-10 pr-3.5 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:border-[#659F84] focus:outline-none shadow-sm"
           />
         </div>
 
@@ -62,8 +62,8 @@ export default function HabitsPage() {
               onClick={() => setSelectedCategory(cat)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
                 selectedCategory === cat
-                  ? 'bg-[#659F84] text-[#141917] font-bold shadow-md shadow-[#659F84]/20'
-                  : 'bg-[#202B25] border border-[#293730] text-slate-400 hover:text-white hover:border-[#659F84]/40'
+                  ? 'bg-[#659F84] text-white dark:text-[#141917] font-bold shadow-md shadow-[#659F84]/20'
+                  : 'bg-white dark:bg-[#202B25] border border-slate-200 dark:border-[#293730] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:border-[#659F84]/40 shadow-sm'
               }`}
             >
               {cat}
@@ -74,11 +74,11 @@ export default function HabitsPage() {
 
       {/* Habits Grid */}
       {filteredHabits.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-[#293730] bg-[#202B25]/60 p-12 text-center space-y-3">
-          <p className="text-sm text-slate-400">No habits match your current search filter.</p>
+        <div className="rounded-2xl border border-dashed border-slate-300 dark:border-[#293730] bg-white/60 dark:bg-[#202B25]/60 p-12 text-center space-y-3">
+          <p className="text-sm text-slate-500 dark:text-slate-400">No habits match your current search filter.</p>
           <button
             onClick={() => { setSearch(''); setSelectedCategory('All'); }}
-            className="text-xs font-semibold text-[#84B59F] hover:underline"
+            className="text-xs font-semibold text-[#40755C] dark:text-[#84B59F] hover:underline"
           >
             Clear Filters
           </button>

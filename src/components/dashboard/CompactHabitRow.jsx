@@ -50,20 +50,20 @@ export default function CompactHabitRow({ habit }) {
         isCompleted
           ? 'bg-[#659F84]/15 border-[#659F84]/40'
           : habit.inRescueMode || activePlan
-          ? 'bg-[#202B25] border-[#E07A5F]/50 glow-amber'
-          : 'bg-[#202B25] border-[#293730] hover:border-[#659F84]/40'
+          ? 'bg-white dark:bg-[#202B25] border-[#E07A5F]/50 shadow-md glow-amber'
+          : 'bg-white dark:bg-[#202B25] border-slate-200 dark:border-[#293730] hover:border-[#659F84]/40 shadow-sm'
       }`}>
         
         {/* Left Info */}
         <div className="flex items-center gap-3 min-w-0">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#141917] border border-[#293730]">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-100 dark:bg-[#141917] border border-slate-200 dark:border-[#293730]">
             {getCategoryIcon(habit.category)}
           </div>
           
           <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <h3 className="font-heading text-sm font-bold text-white truncate">
-                <Link to={`/habits/${habit.id}`} className="hover:text-[#84B59F]">
+              <h3 className="font-heading text-sm font-bold text-slate-900 dark:text-white truncate">
+                <Link to={`/habits/${habit.id}`} className="hover:text-[#40755C] dark:hover:text-[#84B59F]">
                   {habit.name}
                 </Link>
               </h3>
@@ -73,10 +73,10 @@ export default function CompactHabitRow({ habit }) {
                 </span>
               )}
             </div>
-            <p className="text-[11px] text-slate-400 flex items-center gap-1.5 pt-0.5">
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1.5 pt-0.5">
               <span>{habit.category}</span>
               <span>•</span>
-              <span className="font-semibold text-[#84B59F] flex items-center gap-1">
+              <span className="font-semibold text-[#40755C] dark:text-[#84B59F] flex items-center gap-1">
                 <Clock className="h-3 w-3 text-[#659F84]" />
                 {habit.targetAmount} {habit.targetUnit}
               </span>
@@ -89,9 +89,9 @@ export default function CompactHabitRow({ habit }) {
           {isCompleted ? (
             <button
               onClick={() => logHabitStatus(habit.id, 'completed')}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#659F84] text-[#141917] font-extrabold text-xs shadow-md shadow-[#659F84]/20"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#659F84] text-white dark:text-[#141917] font-extrabold text-xs shadow-md shadow-[#659F84]/20"
             >
-              <Check className="h-3.5 w-3.5 text-[#141917] stroke-[3]" /> Done
+              <Check className="h-3.5 w-3.5 text-white dark:text-[#141917] stroke-[3]" /> Done
             </button>
           ) : (
             <div className="flex items-center gap-1.5">
@@ -104,10 +104,10 @@ export default function CompactHabitRow({ habit }) {
 
               <button
                 onClick={() => setMissModalOpen(true)}
-                className="p-1.5 rounded-xl border border-[#293730] bg-[#141917] text-slate-400 hover:text-[#E9C46A] hover:bg-[#E9C46A]/20"
+                className="p-1.5 rounded-xl border border-slate-300 dark:border-[#293730] bg-slate-100 dark:bg-[#141917] text-slate-600 dark:text-slate-400 hover:text-[#E07A5F] dark:hover:text-[#E9C46A] hover:bg-slate-200 dark:hover:bg-[#E9C46A]/20"
                 title="Mark Missed (AI Rescue)"
               >
-                <LifeBuoy className="h-4 w-4 text-[#E9C46A]" />
+                <LifeBuoy className="h-4 w-4 text-[#E07A5F] dark:text-[#E9C46A]" />
               </button>
             </div>
           )}

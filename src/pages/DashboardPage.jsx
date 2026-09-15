@@ -103,12 +103,12 @@ export default function DashboardPage() {
     <div className="space-y-6">
       
       {/* Streamlined Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#293730] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-[#293730] pb-4">
         <div className="space-y-1">
-          <span className="text-[11px] font-semibold text-[#84B59F]">
+          <span className="text-[11px] font-semibold text-[#40755C] dark:text-[#84B59F]">
             {format(new Date(), 'EEEE, MMMM d, yyyy')}
           </span>
-          <h1 className="font-heading text-2xl font-extrabold text-white flex items-center gap-2">
+          <h1 className="font-heading text-2xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
             {timeOfDay}, {currentUser?.displayName?.split(' ')[0] || 'Friend'} 🌱
           </h1>
         </div>
@@ -125,7 +125,7 @@ export default function DashboardPage() {
           
           <button
             onClick={() => { setEditingHabit(null); setFormModalOpen(true); }}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#659F84] hover:bg-[#52796F] font-bold text-xs text-[#141917] shadow-md transition-all hover:scale-[1.02]"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#659F84] hover:bg-[#52796F] font-bold text-xs text-white dark:text-[#141917] shadow-md transition-all hover:scale-[1.02]"
           >
             <Plus className="h-4 w-4" />
             Add Habit
@@ -155,18 +155,18 @@ export default function DashboardPage() {
         </div>
 
         {/* Card 2: Habits Completed as Completed / Total (e.g. 3/5) */}
-        <div className="rounded-3xl bg-[#202B25] border border-[#293730] p-5 text-white flex flex-col justify-between shadow-lg h-36">
+        <div className="rounded-3xl bg-white dark:bg-[#202B25] border border-slate-200 dark:border-[#293730] p-5 text-slate-900 dark:text-white flex flex-col justify-between shadow-lg h-36">
           <div className="flex items-center justify-between">
             <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#659F84]/20">
               <CheckCircle className="h-5 w-5 text-[#659F84]" />
             </div>
-            <div className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#659F84]/20 text-[11px] font-bold text-[#84B59F]">
+            <div className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#659F84]/20 text-[11px] font-bold text-[#40755C] dark:text-[#84B59F]">
               {todayCompletionPercentage}%
             </div>
           </div>
           <div>
-            <span className="text-xs font-semibold text-slate-400 block">Habits Completed</span>
-            <span className="font-heading text-3xl font-extrabold tracking-tight text-white block pt-0.5">
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 block">Habits Completed</span>
+            <span className="font-heading text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white block pt-0.5">
               {completedTodayCount}/{activeHabits.length}
             </span>
           </div>
@@ -176,7 +176,7 @@ export default function DashboardPage() {
         <div className="rounded-3xl bg-[#4F7E68] p-5 text-white flex flex-col justify-between shadow-lg h-36">
           <div className="flex items-center justify-between">
             <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/20">
-              <PieChartIcon className="h-5 w-5 text-[#84B59F]" />
+              <PieChartIcon className="h-5 w-5 text-[#A7D7C5]" />
             </div>
             <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/20 text-[10px] font-bold text-white">
               {overallCompletionRate}%
@@ -194,14 +194,14 @@ export default function DashboardPage() {
 
       {/* Active Rescue Banner */}
       {activePlans.length > 0 && (
-        <div className="rounded-2xl border border-[#E07A5F]/40 bg-[#202B25] p-4 flex items-center justify-between shadow-lg glow-amber">
+        <div className="rounded-2xl border border-[#E07A5F]/40 bg-white dark:bg-[#202B25] p-4 flex items-center justify-between shadow-lg glow-amber">
           <div className="flex items-center gap-3">
             <LifeBuoy className="h-5 w-5 text-[#E07A5F] shrink-0" />
             <div>
-              <h3 className="font-heading text-sm font-bold text-white">
+              <h3 className="font-heading text-sm font-bold text-slate-900 dark:text-white">
                 {activePlans.length} Active AI Recovery Plan{activePlans.length === 1 ? '' : 's'}
               </h3>
-              <p className="text-xs text-slate-300">4-day micro-goals active.</p>
+              <p className="text-xs text-slate-600 dark:text-slate-300">4-day micro-goals active.</p>
             </div>
           </div>
           <Link
@@ -217,29 +217,29 @@ export default function DashboardPage() {
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <div className="space-y-0.5">
-            <h2 className="font-heading text-lg font-bold text-white">Daily Habits Overview</h2>
-            <p className="text-xs text-slate-400">Brief status summary of all habits being tracked.</p>
+            <h2 className="font-heading text-lg font-bold text-slate-900 dark:text-white">Daily Habits Overview</h2>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Brief status summary of all habits being tracked.</p>
           </div>
           
           <Link
             to="/habits"
-            className="text-xs font-bold text-[#84B59F] hover:text-white flex items-center gap-1"
+            className="text-xs font-bold text-[#40755C] dark:text-[#84B59F] hover:text-[#2D5A42] dark:hover:text-white flex items-center gap-1"
           >
             Manage All Habits <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
 
         {activeHabits.length === 0 ? (
-          <div className="rounded-3xl border border-dashed border-[#293730] bg-[#202B25]/60 p-8 text-center space-y-3">
+          <div className="rounded-3xl border border-dashed border-slate-300 dark:border-[#293730] bg-white/60 dark:bg-[#202B25]/60 p-8 text-center space-y-3">
             <HeartHandshake className="h-8 w-8 text-[#659F84] mx-auto" />
             <div className="space-y-1 max-w-sm mx-auto">
-              <h3 className="font-heading text-base font-bold text-white">No Habits Yet</h3>
-              <p className="text-xs text-slate-400">Create your first habit to begin your wellness journey.</p>
+              <h3 className="font-heading text-base font-bold text-slate-900 dark:text-white">No Habits Yet</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Create your first habit to begin your wellness journey.</p>
             </div>
 
             <button
               onClick={() => setFormModalOpen(true)}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#659F84] hover:bg-[#52796F] font-bold text-xs text-[#141917] shadow-md"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#659F84] hover:bg-[#52796F] font-bold text-xs text-white dark:text-[#141917] shadow-md"
             >
               <Plus className="h-4 w-4" />
               Create First Habit
